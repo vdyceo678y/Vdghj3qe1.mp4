@@ -1,209 +1,362 @@
-html
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Videy.co - Galeri Video Viral</title>
-  
-  <style>
-    :root {
-      --bg-color: #f0f8ff;
-      --card-bg-color: #ffffff;
-      --text-color: #333333;
-      --primary-color: #bf6002;
-      --hover-color: #fa7b05;
-      --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Tonton Video Seru - Pemutar Video Minimalis</title>
+    
+    <!-- Meta Tags Penting agar Lolos & Tampil Bagus Saat Dibagikan ke Meta (Facebook/WhatsApp) -->
+    <meta name="description" content="Nikmati pemutar video yang cepat, bersih, dan bebas gangguan iklan.">
+    <meta property="og:type" content="video.other">
+    <meta property="og:title" content="Tonton Video Menarik di Sini">
+    <meta property="og:description" content="Pemutar video sederhana, cepat, dan responsif tanpa iklan mengganggu.">
+    <meta property="og:image" content="https://unsplash.com"> <!-- Ganti dengan URL poster video Anda -->
+    <meta property="og:site_name" content="Videy">
+    <meta name="robots" content="index, follow">
 
-    body {
-      background-color: var(--bg-color);
-      font-family: -apple-system, system-ui, sans-serif;
-      margin: 0;
-      padding: 20px;
-      color: var(--text-color);
-    }
-
-    h1 {
-      text-align: center;
-      color: var(--primary-color);
-      font-size: clamp(1.5rem, 5vw, 2.5rem);
-      margin-bottom: 30px;
-    }
-
-    .gallery-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .video-card {
-      background: var(--card-bg-color);
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: transform 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .video-card:hover {
-      transform: translateY(-8px);
-    }
-
-    .video-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      cursor: pointer;
-    }
-
-    .video-info {
-      padding: 15px;
-      text-align: center;
-      flex-grow: 1;
-    }
-
-    .video-info h3 {
-      margin: 0 0 15px 0;
-      font-size: 1rem;
-    }
-
-    .btn-watch {
-      display: inline-block;
-      background: var(--primary-color);
-      color: white;
-      padding: 10px 20px;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: 0.3s;
-      cursor: pointer;
-      border: none;
-      width: 100%;
-    }
-
-    .btn-watch:hover {
-      background: var(--hover-color);
-    }
-
-    /* MODAL STYLES */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-content {
-      width: 90%;
-      max-width: 800px;
-      position: relative;
-    }
-
-    .modal-content video {
-      width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.2);
-    }
-
-    .close-modal {
-      position: absolute;
-      top: -40px;
-      right: 0;
-      color: white;
-      font-size: 30px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      padding: 20px;
-      color: #777;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>🎬 Viral Video Gallery</h1>
-
-  <main class="gallery-container">
-    <!-- Video Item 1 -->
-    <div class="video-card">
-      <img src="1.jpg" alt="Video 1" onclick="openVideo('https://vdyceo678y.github.io')">
-      <div class="video-info">
-        <h3>Caught you staring now rate it 😍</h3>
-        <button class="btn-watch" onclick="openVideo('https://yusninita007.github.io/8nvy62J51.mp4/')">Watch Video</button>
-      </div>
-    </div>
-
-    <!-- Video Item 2 -->
-    <div class="video-card">
-      <img src="2.jpg" alt="Video 2" onclick="openVideo('https://vdyceo678y.github.io')">
-      <div class="video-info">
-        <h3>Chillen and winning 🍃🌹</h3>
-        <button class="btn-watch" onclick="openVideo('https://yusninita007.github.io/8nvy62J51.mp4')">Watch Video</button>
-      </div>
-    </div>
-
-    <!-- Video Item 3 -->
-    <div class="video-card">
-      <img src="3.jpg" alt="Video 3" onclick="openVideo('https://vdyceo678y.github.io')">
-      <div class="video-info">
-        <h3>Little Miah 💖</h3>
-        <button class="btn-watch" onclick="openVideo('https://yusninita007.github.io/8nvy62J51.mp4/')">Watch Video</button>
-      </div>
-    </div>
-  </main>
-
-  <!-- Video Modal Player -->
-  <div id="videoModal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal" onclick="closeVideo()">&times;</span>
-      <video id="mainPlayer" controls autoplay>
-        <source src="" type="video/mp4">
-        Browser kamu tidak mendukung pemutar video.
-      </video>
-    </div>
-  </div>
-
-  <footer>
-    <p>&copy; 2025 Videy.co - Curated Viral Content</p>
-  </footer>
-
-  <script>
-    const modal = document.getElementById('videoModal');
-    const player = document.getElementById('mainPlayer');
-
-    function openVideo(url) {
-      player.src = url;
-      modal.style.display = 'flex';
-      player.play();
-    }
-
-    function closeVideo() {
-      modal.style.display = 'none';
-      player.pause();
-      player.src = "";
-    }
-
-    // Tutup modal jika klik di luar video
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        closeVideo();
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com" />
+    
+    <style>
+      /* Reset & Base Styles */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
-    }
-  </script>
 
-</body>
-</html>
+      html, body {
+        height: 100%;
+        background: #f9fafb;
+        color: #111827;
+        font-family: 'Inter', Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* Header */
+      .main-header {
+        width: 100%;
+        padding: 14px 0;
+        background: #ffffff;
+        border-bottom: 1px solid #e5e7eb;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-container {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header-title {
+        font-weight: 700;
+        font-size: 24px;
+        color: #111827;
+        text-decoration: none;
+      }
+
+      .header-upload-btn {
+        background: #f3f4f6;
+        color: #1f2937;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: background .2s;
+      }
+
+      .header-upload-btn:hover {
+        background: #e5e7eb;
+      }
+
+      /* Konten Utama */
+      .main-content {
+        width: 100%;
+        max-width: 840px;
+        padding: 24px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* Pemutar Video (Bersih Tanpa Grid Iklan Samping) */
+      .video-box {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #000000;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        position: relative;
+        cursor: pointer;
+      }
+
+      .video-box video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+
+      /* Overlay Tombol Play Besar */
+      .play-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 70px;
+        height: 70px;
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        transition: background 0.2s, transform 0.2s;
+        pointer-events: none;
+      }
+
+      .video-box:hover .play-overlay {
+        background: rgba(0, 0, 0, 0.8);
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+
+      .play-overlay i {
+        color: #ffffff;
+        font-size: 28px;
+        margin-left: 4px; /* Penyelarasan visual ikon play */
+      }
+
+      /* Sembunyikan tombol bawaan browser sebelum diputar */
+      video::-webkit-media-controls-start-playback-button,
+      video::-webkit-media-controls-play-button {
+        display: none !important;
+        -webkit-appearance: none;
+      }
+
+      /* Tombol Aksi / Unduh */
+      .video-actions {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .download-btn {
+        background: linear-gradient(90deg, #4f46e5, #7c3aed);
+        color: #ffffff;
+        border: none;
+        border-radius: 30px;
+        padding: 12px 28px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform .2s, box-shadow .2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+      }
+
+      .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+      }
+
+      /* Playlist Grid */
+      .playlist-wrapper {
+        width: 100%;
+        margin-top: 40px;
+      }
+
+      .playlist-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: #111827;
+      }
+
+      .playlist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 16px;
+        width: 100%;
+      }
+
+      .playlist-item a {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        transition: transform .2s;
+      }
+
+      .playlist-item a:hover {
+        transform: translateY(-4px);
+      }
+
+      .image-container {
+        position: relative;
+        aspect-ratio: 16/10;
+        background: #e5e7eb;
+      }
+
+      .playlist-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* Hover Overlay pada Rekomendasi Playlist */
+      .play-icon-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity .2s ease;
+      }
+
+      .playlist-item a:hover .play-icon-overlay {
+        opacity: 1;
+      }
+
+      .play-icon-overlay i {
+        color: #ffffff;
+        font-size: 24px;
+        transform: scale(0.8);
+        transition: transform 0.2s ease;
+      }
+
+      .playlist-item a:hover .play-icon-overlay i {
+        transform: scale(1);
+      }
+
+      .playlist-info {
+        padding: 10px 12px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #374151;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      /* Footer */
+      .main-footer {
+        width: 100%;
+        margin-top: auto;
+        padding: 24px 0;
+        border-top: 1px solid #e5e7eb;
+        background: #ffffff;
+        text-align: center;
+        font-size: 13px;
+        color: #6b7280;
+      }
+
+      /* Responsif Mobile */
+      @media (max-width: 640px) {
+        .main-content {
+          padding: 12px 0;
+        }
+        .video-box {
+          border-radius: 0;
+        }
+        .video-actions {
+          padding: 0 20px;
+        }
+        .playlist-wrapper {
+          padding: 0 20px;
+        }
+        .playlist-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Header -->
+    <header class="main-header">
+      <div class="header-container">
+        <a href="#" class="header-title">Videy</a>
+        <a href="#" class="header-upload-btn">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Unggah
+        </a>
+      </div>
+    </header>
+
+    <!-- Konten Utama -->
+    <main class="main-content">
+      
+      <!-- Pemutar Video -->
+      <div class="video-box" id="videoBox">
+        <div class="play-overlay" id="playOverlay">
+          <i class="fa-solid fa-play"></i>
+        </div>
+        <!-- Ganti src dengan URL video mp4 Anda yang valid -->
+        <video id="mainVideo" preload="metadata" playsinline>
+          <source src="https://cdn2.videy.co" type="video/mp4">
+          Browser Anda tidak mendukung pemutar video ini.
+        </video>
+      </div>
+
+      <!-- Tombol Aksi -->
+      <div class="video-actions">
+        <a href="#" class="download-btn" download>
+          <i class="fa-solid fa-arrow-down"></i> Unduh Video
+        </a>
+      </div>
+
+      <!-- Rekomendasi Video / Playlist -->
+      <div class="playlist-wrapper">
+        <h2 class="playlist-title">Video Terkait</h2>
+        <div class="playlist-grid">
+          
+          <!-- Item 1 -->
+          <div class="playlist-item">
+            <a href="#">
+              <div class="image-container">
+                <img src="https://cdn2.videy.co" alt="Video Thumbnail">
+                <div class="play-icon-overlay">
+                  <i class="fa-solid fa-circle-play"></i>
+                </div>
+              </div>
+              <div class="playlist-info">Judul Video Rekomendasi 1</div>
+            </a>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="playlist-item">
+            <a href="#">
+              <div class="image-container">
+                <img src="https://cdn2.videy.co" alt="Video Thumbnail">
+                <div class="play-icon-overlay">
+                  <i class="fa-solid fa-circle-play"></i>
+                </div>
